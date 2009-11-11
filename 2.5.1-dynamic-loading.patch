@@ -1,0 +1,69 @@
+--- origsrc/avidemux_2.5.1/avidemux/ADM_audiocodec/ADM_pluginLoad.cpp	2009-08-12 13:12:50.000000000 -0500
++++ src/avidemux_2.5.1/avidemux/ADM_audiocodec/ADM_pluginLoad.cpp	2009-11-10 23:33:27.871243900 -0600
+@@ -134,7 +134,7 @@ uint8_t ADM_ad_loadPlugins(const char *p
+ {
+ #define MAX_EXTERNAL_FILTER 50
+ 
+-#ifdef __WIN32
++#if defined(__WIN32) || defined(__CYGWIN__)
+ #define SHARED_LIB_EXT "dll"
+ #elif defined(__APPLE__)
+ #define SHARED_LIB_EXT "dylib"
+--- origsrc/avidemux_2.5.1/avidemux/ADM_audiodevice/ADM_audiodevice.cpp	2008-07-16 12:39:59.000000000 -0500
++++ src/avidemux_2.5.1/avidemux/ADM_audiodevice/ADM_audiodevice.cpp	2009-11-10 23:33:35.351254200 -0600
+@@ -98,7 +98,7 @@ uint8_t ADM_av_loadPlugins(const char *p
+ {
+ #define MAX_EXTERNAL_FILTER 100
+ // FIXME Factorize
+-#ifdef __WIN32
++#if defined(__WIN32) || defined(__CYGWIN__)
+ #define SHARED_LIB_EXT "dll"
+ #elif defined(__APPLE__)
+ #define SHARED_LIB_EXT "dylib"
+--- origsrc/avidemux_2.5.1/avidemux/ADM_audiofilter/audio_encoderPlugin.cpp	2008-07-21 14:15:54.000000000 -0500
++++ src/avidemux_2.5.1/avidemux/ADM_audiofilter/audio_encoderPlugin.cpp	2009-11-10 23:33:45.001267500 -0600
+@@ -132,7 +132,7 @@ uint8_t ADM_ae_loadPlugins(const char *p
+ {
+ #define MAX_EXTERNAL_FILTER 100
+ // FIXME Factorize
+-#ifdef __WIN32
++#if defined(__WIN32) || defined(__CYGWIN__)
+ #define SHARED_LIB_EXT "dll"
+ #elif defined(__APPLE__)
+ #define SHARED_LIB_EXT "dylib"
+--- origsrc/avidemux_2.5.1/avidemux/ADM_core/src/ADM_dynamicLoading.cpp	2009-02-25 14:00:12.000000000 -0600
++++ src/avidemux_2.5.1/avidemux/ADM_core/src/ADM_dynamicLoading.cpp	2009-11-10 21:38:24.001325600 -0600
+@@ -24,6 +24,10 @@
+ #include <dlfcn.h>
+ #endif
+ 
++#ifndef RTLD_LOCAL
++#define RTLD_LOCAL 0
++#endif
++
+ #include "ADM_default.h"
+ #include "ADM_dynamicLoading.h"
+ 
+--- origsrc/avidemux_2.5.1/avidemux/ADM_encoder/ADM_pluginLoad.cpp	2009-07-24 16:01:55.000000000 -0500
++++ src/avidemux_2.5.1/avidemux/ADM_encoder/ADM_pluginLoad.cpp	2009-11-10 23:33:57.381284600 -0600
+@@ -168,7 +168,7 @@ int loadVideoEncoderPlugins(int uiType, 
+ {
+ #define MAX_EXTERNAL_FILTER 50
+ 
+-#ifdef __WIN32
++#if defined(__WIN32) || defined(__CYGWIN__)
+ #define SHARED_LIB_EXT "dll"
+ #elif defined(__APPLE__)
+ #define SHARED_LIB_EXT "dylib"
+--- origsrc/avidemux_2.5.1/avidemux/ADM_filter/filter.cpp	2009-07-24 16:01:55.000000000 -0500
++++ src/avidemux_2.5.1/avidemux/ADM_filter/filter.cpp	2009-11-10 23:32:41.691180100 -0600
+@@ -187,7 +187,7 @@ uint8_t ADM_vf_loadPlugins(const char *p
+ {
+ #define MAX_EXTERNAL_FILTER 100
+ 
+-#ifdef __WIN32
++#if defined(__WIN32) || defined(__CYGWIN__)
+ #define SHARED_LIB_EXT "dll"
+ #elif defined(__APPLE__)
+ #define SHARED_LIB_EXT "dylib"
+

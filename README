@@ -1,0 +1,79 @@
+avidemux
+------------------------------------------
+Avidemux is a free video editor designed for simple cutting, filtering 
+and encoding tasks. It supports many file types, including AVI, DVD 
+compatible MPEG files, MP4 and ASF, using a variety of codecs. Tasks can 
+be automated using projects, job queue and powerful scripting 
+capabilities.
+
+Runtime requirements:
+  cygwin-1.7.0-62
+  libaften0-0.0.8-1
+  libatk1.0_0-1.28.0-1
+  libcairo2-1.8.8-1
+  libfaac0-1.28-11
+  libfaad2-2.7-10
+  libfontconfig1-2.7.3-1
+  libfreetype6-2.3.11-1
+  libgcc1-4.3.4-1
+  libgdk_pixbuf2.0_0-2.18.3-1
+  libglib2.0_0-2.22.2-1
+  libgtk2.0_0-2.18.3-1
+  libiconv2-1.13-10
+  libintl8-0.17-11
+  libmp3lame0-3.98.2-10
+  libopencore-amrnb0-0.1.2-1
+  libopencore-amrwb0-0.1.2-1
+  libSDL1.2_0-1.2.13-10
+  libstdc++6-4.3.4-1
+  libvorbis0-1.2.3-1
+  libvorbisenc2-1.2.3-1
+  libx264_68-20090712-1
+  libxml2-2.7.4-1
+  libxvidcore4-1.2.2-1
+  zlib0-1.2.3-10
+
+Build requirements:
+(besides corresponding -devel packages)
+  autoconf2.5-2.63-10
+  automake1.10-1.10.2-10
+  binutils-2.19.51-1
+  cygport-0.9.9-1
+  gawk-3.1.7-1
+  gcc4-core-4.3.4-1
+  gcc4-g++-4.3.4-1
+  libtool-2.2.7a-14
+  make-3.81-2
+  pkg-config-0.23b-10
+  sed-4.1.5-2
+
+Canonical website:
+  http://fixounet.free.fr/avidemux/
+  http://www.avidemux.org/admWiki/
+
+Canonical download:
+  http://sourceforge.net/projects/avidemux/files/
+
+-------------------------------------------
+
+Build instructions:
+  unpack avidemux-2.5.1-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./avidemux-2.5.1-X.cygport all
+
+This will create:
+  /usr/src/avidemux-2.5.1-X-src.tar.bz2
+  /usr/src/avidemux-2.5.1-X.tar.bz2
+
+-------------------------------------------
+
+Port Notes:
+
+----- version 2.5.1-1 -----
+Initial release for Cygwin 1.7.
+
+
+Cygwin port maintained by:
+http://sourceware.org/cygwinports/

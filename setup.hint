@@ -1,0 +1,8 @@
+category: Video
+requires: libaften0 libatk1.0_0 libcairo2 libfaac0 libfaad2 libfontconfig1 libfreetype6 libgcc1 libgdk_pixbuf2.0_0 libglib2.0_0 libgtk2.0_0 libiconv2 libintl8 libmp3lame0 libopencore-amrnb0 libopencore-amrwb0 libSDL1.2_0 libstdc++6 libvorbis0 libvorbisenc2
+sdesc: "Video editor designed for simple tasks"
+ldesc: "Avidemux is a free video editor designed for simple cutting, 
+filtering and encoding tasks. It supports many file types, including 
+AVI, DVD compatible MPEG files, MP4 and ASF, using a variety of codecs. 
+Tasks can be automated using projects, job queue and powerful scripting 
+capabilities."

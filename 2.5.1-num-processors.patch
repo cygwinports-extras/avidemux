@@ -1,0 +1,20 @@
+--- origsrc/avidemux_2.5.1/avidemux/ADM_core/src/ADM_cpuCap.cpp	2009-04-02 08:24:10.000000000 -0500
++++ src/avidemux_2.5.1/avidemux/ADM_core/src/ADM_cpuCap.cpp	2009-11-10 20:24:51.538859200 -0600
+@@ -17,6 +17,7 @@
+ #include <sys/types.h>
+ #include <sys/sysctl.h>
+ #else
++#include <unistd.h>
+ #include <string.h>
+ #include <sched.h>
+ #endif
+@@ -153,6 +154,8 @@ int ADM_cpu_num_processors(void)
+         np = 1;
+ 
+     return np;
++#elif defined(_SC_NPROCESSORS_ONLN)
++    return sysconf(_SC_NPROCESSORS_ONLN);
+ #elif defined(__unix__) && !defined(__CYGWIN__)
+     unsigned int bit;
+     int np;
+
