@@ -1,0 +1,11 @@
+--- origsrc/avidemux_2.5.2/avidemux/CMakeLists.txt	2009-10-01 14:14:16.000000000 -0500
++++ src/avidemux_2.5.2/avidemux/CMakeLists.txt	2010-02-07 17:57:34.471316200 -0600
+@@ -509,7 +509,7 @@ IF (UNIX AND NOT APPLE)
+    ADD_CUSTOM_COMMAND(TARGET ffmpeg
+                       POST_BUILD
+                       COMMAND mkdir -p ${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}
+-                      COMMAND find ${CMAKE_BINARY_DIR}/avidemux -name '*.so*' | xargs ln -sft ${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}
++                      COMMAND find ${CMAKE_BINARY_DIR}/avidemux -name "*.${CMAKE_SHARED_LIBRARY_SUFFIX}*" | xargs -r ln -sft ${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}
+                       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+                       COMMENT "Creating temporary lib directory for proper plugins linking")
+ ENDIF (UNIX AND NOT APPLE)

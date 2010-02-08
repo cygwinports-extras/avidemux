@@ -7,9 +7,10 @@ SRC_DIR="${PN}_${PV}"
 
 PATCH_URI="
 	2.5.1-dynamic-loading.patch
-	2.5.1-ffmpeg-build.patch
+	2.5.2-ffmpeg-build.patch
 	2.5.1-not-win32.patch
 	2.5.1-num-processors.patch
+	2.5.2-cmake-implib.patch
 "
 #	2.5.1-qt4-i18n-install.patch
 
@@ -22,10 +23,10 @@ src_compile() {
 	cd ${B}
 	# Qt4 videoFilter plugins cause crash-on-exit with CLI and GTK UIs;
 	# we only need one UI, so we use GTK
-	cygcmake \
-		-DQT4=OFF \
-		-DXVIDEO=OFF
-	cygmake
+#	cygcmake \
+#		-DQT4=OFF \
+#		-DXVIDEO=OFF
+#	cygmake
 
 	mkdir -p ${B}/lib
 	ln -sf $(find ${B}/avidemux -name '*.dll.a') $(find ${B}/avidemux/ -name 'cygADM5*-*.dll') ${B}/lib/

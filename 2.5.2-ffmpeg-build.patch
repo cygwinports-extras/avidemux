@@ -1,5 +1,5 @@
---- origsrc/avidemux_2.5.1/cmake/admFFmpegBuild.cmake	2009-08-03 13:39:09.000000000 -0500
-+++ src/avidemux_2.5.1/cmake/admFFmpegBuild.cmake	2009-11-10 22:09:29.963909600 -0600
+--- origsrc/avidemux_2.5.2/cmake/admFFmpegBuild.cmake
++++ src/avidemux_2.5.2/cmake/admFFmpegBuild.cmake
 @@ -129,11 +129,11 @@ add_custom_target(ffmpeg ALL
  # Add and install libraries
  getFfmpegLibNames("${FFMPEG_SOURCE_DIR}")
@@ -9,7 +9,7 @@
  	set(FFMPEG_INSTALL_DIR ${BIN_DIR})
 -else (WIN32)
 +else (WIN32 OR CYGWIN)
- 	set(FFMPEG_INSTALL_DIR lib)
+ 	set(FFMPEG_INSTALL_DIR lib${LIB_SUFFIX})
 -endif (WIN32)
 +endif (WIN32 OR CYGWIN)
  
