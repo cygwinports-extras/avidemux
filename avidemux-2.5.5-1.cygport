@@ -6,9 +6,10 @@ SRC_URI="mirror://sourceforge/${PN}/${PN}_${PV}.tar.gz"
 SRC_DIR="${PN}_${PV}"
 
 PATCH_URI="
+	mirror://portage/media-video/${PN}/files/${PN}-2.5.4-x264-build115.patch
 	2.5.1-dynamic-loading.patch
 	2.5.2-ffmpeg-build.patch
-	2.5.1-not-win32.patch
+	2.5.5-not-win32.patch
 	2.5.1-num-processors.patch
 	2.5.2-cmake-implib.patch
 "

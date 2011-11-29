@@ -31,19 +31,6 @@
  #define SHARED_LIB_EXT "dll"
  #elif defined(__APPLE__)
  #define SHARED_LIB_EXT "dylib"
---- origsrc/avidemux_2.5.1/avidemux/ADM_core/src/ADM_dynamicLoading.cpp	2009-02-25 14:00:12.000000000 -0600
-+++ src/avidemux_2.5.1/avidemux/ADM_core/src/ADM_dynamicLoading.cpp	2009-11-10 21:38:24.001325600 -0600
-@@ -24,6 +24,10 @@
- #include <dlfcn.h>
- #endif
- 
-+#ifndef RTLD_LOCAL
-+#define RTLD_LOCAL 0
-+#endif
-+
- #include "ADM_default.h"
- #include "ADM_dynamicLoading.h"
- 
 --- origsrc/avidemux_2.5.1/avidemux/ADM_encoder/ADM_pluginLoad.cpp	2009-07-24 16:01:55.000000000 -0500
 +++ src/avidemux_2.5.1/avidemux/ADM_encoder/ADM_pluginLoad.cpp	2009-11-10 23:33:57.381284600 -0600
 @@ -168,7 +168,7 @@ int loadVideoEncoderPlugins(int uiType, 
