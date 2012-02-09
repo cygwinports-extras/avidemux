@@ -1,0 +1,41 @@
+--- origsrc/avidemux_2.5.6/avidemux/ADM_core/src/ADM_crashdump_unix.cpp	2011-06-17 08:02:41.000000000 -0500
++++ src/avidemux_2.5.6/avidemux/ADM_core/src/ADM_crashdump_unix.cpp	2012-02-08 20:33:38.151329000 -0600
+@@ -21,7 +21,9 @@
+ #include <unistd.h>
+ #include <cxxabi.h>
+ #include <signal.h>
++#ifndef __CYGWIN__
+ #include <execinfo.h>
++#endif
+ 
+ #include "ADM_default.h"
+ 
+@@ -63,17 +65,20 @@ void installSigHandler()
+ void ADM_backTrack(const char *info,int lineno,const char *file)
+ {
+ 	char wholeStuff[2048];
++#ifndef __CYGWIN__
+     char buffer[2048];
+     char in[2048];
+ 	void *stack[20];
+ 	char **functions;
+ 	int count, i;
++#endif
+ 
+ 	wholeStuff[0]=0;
+ 
+ 	if(mysaveFunction)
+ 		mysaveFunction();
+ 
++#ifndef __CYGWIN__
+ 	printf("\n*********** BACKTRACK **************\n");
+ 
+ 	count = backtrace(stack, 20);
+@@ -101,6 +106,7 @@ void ADM_backTrack(const char *info,int
+ 	}
+ 
+ 	printf("*********** BACKTRACK **************\n");
++#endif
+ 
+ 	if(myFatalFunction)
+ 		myFatalFunction("Crash", wholeStuff); // FIXME

@@ -6,19 +6,19 @@ SRC_URI="mirror://sourceforge/${PN}/${PN}_${PV}.tar.gz"
 SRC_DIR="${PN}_${PV}"
 
 PATCH_URI="
-	mirror://portage/media-video/${PN}/files/${PN}-2.5.4-x264-build115.patch
 	2.5.1-dynamic-loading.patch
 	2.5.2-ffmpeg-build.patch
 	2.5.5-not-win32.patch
 	2.5.1-num-processors.patch
 	2.5.2-cmake-implib.patch
+	2.5.6-no-backtrace.patch
 "
 #	2.5.1-qt4-i18n-install.patch
 
 DIFF_EXCLUDES="ffmpeg"
 
 # required for (included) ffmpeg
-CFLAGS+=" -fno-common -fno-reorder-functions -fomit-frame-pointer"
+CFLAGS+=" -fno-reorder-functions -fomit-frame-pointer"
 
 src_compile() {
 	cd ${B}
@@ -27,7 +27,7 @@ src_compile() {
 	cygcmake \
 		-DQT4=OFF \
 		-DXVIDEO=OFF
-	cygmake
+	cygmake -j1
 
 	mkdir -p ${B}/lib
 	ln -sf $(find ${B}/avidemux -name '*.dll.a') $(find ${B}/avidemux/ -name 'cygADM5*-*.dll') ${B}/lib/
@@ -41,6 +41,7 @@ src_compile() {
 		-DALSA=OFF \
 		-DARTS=OFF \
 		-DESD=OFF \
+		-DFAAC=OFF \
 		-DJACK=OFF \
 		-DQT4=OFF \
 		-DXVIDEO=OFF
