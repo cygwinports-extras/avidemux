@@ -1,0 +1,27 @@
+--- origsrc/avidemux_2.6.0/avidemux_core/ADM_core/include/ADM_crashdump_other.h	2012-08-23 03:46:08.000000000 -0500
++++ src/avidemux_2.6.0/avidemux_core/ADM_core/include/ADM_crashdump_other.h	2012-09-24 00:58:21.949058700 -0500
+@@ -1,4 +1,4 @@
+-#if !defined(__APPLE__) && !defined(unix) && !defined(__MINGW32__) && !defined ADM_CRASHDUMP_OTHER_H
++#if !defined(__APPLE__) && !(defined(unix) && !defined(__CYGWIN__)) && !defined(__MINGW32__) && !defined ADM_CRASHDUMP_OTHER_H
+ #define ADM_CRASHDUMP_OTHER_H
+ 
+ #define installSigHandler()
+--- origsrc/avidemux_2.6.0/avidemux_core/ADM_core/include/ADM_crashdump_unix.h	2012-08-04 22:11:10.000000000 -0500
++++ src/avidemux_2.6.0/avidemux_core/ADM_core/include/ADM_crashdump_unix.h	2012-09-24 00:57:34.364337000 -0500
+@@ -1,4 +1,4 @@
+-#if defined(unix) && !defined ADM_CRASHDUMP_UNIX_H
++#if defined(unix) && !defined(__CYGWIN__) && !defined ADM_CRASHDUMP_UNIX_H
+ #define ADM_CRASHDUMP_UNIX_H
+ 
+ ADM_CORE6_EXPORT void installSigHandler(void);
+--- origsrc/avidemux_2.6.0/avidemux_core/ADM_core/src/CMakeLists.txt	2012-09-04 02:50:19.000000000 -0500
++++ src/avidemux_2.6.0/avidemux_core/ADM_core/src/CMakeLists.txt	2012-09-23 22:52:21.636633600 -0500
+@@ -6,7 +6,7 @@ IF (MINGW)
+ 	SET(ADM_core_SRCS ${ADM_core_SRCS} ADM_crashdump_mingw.cpp)
+ ELSEIF (APPLE)
+ 	SET(ADM_core_SRCS ${ADM_core_SRCS} ADM_crashdump_apple.cpp)
+-ELSEIF (UNIX)
++ELSEIF (UNIX AND NOT CYGWIN)
+ 	SET(ADM_core_SRCS ${ADM_core_SRCS} ADM_crashdump_unix.cpp)
+ ELSE (MINGW)
+ 	SET(ADM_core_SRCS ${ADM_core_SRCS} ADM_crashdump_other.cpp)

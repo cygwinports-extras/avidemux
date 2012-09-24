@@ -1,0 +1,15 @@
+--- origsrc/avidemux_2.6.0/cmake/admAsNeeded.cmake	2012-08-14 03:15:00.000000000 -0500
++++ src/avidemux_2.6.0/cmake/admAsNeeded.cmake	2012-09-23 23:05:34.951008600 -0500
+@@ -8,10 +8,10 @@ MACRO(ADM_ADD_SHARED_LIBRARY name)
+ 	ADD_LIBRARY(${name} SHARED ${ARGN})
+ 	AS_NEEDED(${name})
+ 
+-	if (UNIX AND NOT APPLE)
++	if (UNIX AND NOT APPLE AND NOT CYGWIN)
+ 		TARGET_LINK_LIBRARIES( ${name} "-Wl,-z,defs")
+ 		TARGET_LINK_LIBRARIES( ${name} "stdc++") # for clang
+-	endif (UNIX AND NOT APPLE)
++	endif (UNIX AND NOT APPLE AND NOT CYGWIN)
+ ENDMACRO(ADM_ADD_SHARED_LIBRARY name)
+ 
+ MACRO(ADM_TARGET_NO_EXCEPTION  name)

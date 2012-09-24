@@ -1,0 +1,11 @@
+--- origsrc/avidemux_2.6.0/avidemux_core/ADM_core/include/ADM_dynamicLoading.h	2012-08-04 22:11:10.000000000 -0500
++++ src/avidemux_2.6.0/avidemux_core/ADM_core/include/ADM_dynamicLoading.h	2012-09-23 22:40:27.656796300 -0500
+@@ -23,6 +23,8 @@
+ #	include "ADM_inttype.h"
+ 
+ #	define SHARED_LIB_EXT "dll"
++#elif defined(__CYGWIN__)
++#	define SHARED_LIB_EXT "dll"
+ #elif defined(__APPLE__)
+ #	define SHARED_LIB_EXT "dylib"
+ #else

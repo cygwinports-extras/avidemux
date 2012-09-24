@@ -1,0 +1,65 @@
+--- origsrc/avidemux_2.6.0/avidemux_core/ffmpeg_package/patches/config.mak.diff	2011-09-30 00:29:44.000000000 -0500
++++ src/avidemux_2.6.0/avidemux_core/ffmpeg_package/patches/config.mak.diff	2012-09-24 00:28:29.880558300 -0500
+@@ -1,9 +1,5 @@
+ --- config.mak	2011-09-29 06:10:57.072423557 +0000
+ +++ config.mak	2011-09-29 06:11:44.896423943 +0000
+-@@ -59,7 +59,7 @@
+- LIBTARGET=
+--SLIBNAME=$(SLIBPREF)$(FULLNAME)$(SLIBSUF)
+-+SLIBNAME=$(SLIBPREF)ADM6$(FULLNAME)$(SLIBSUF)
+- SLIBNAME_WITH_VERSION=$(SLIBNAME).$(LIBVERSION)
+- SLIBNAME_WITH_MAJOR=$(SLIBNAME).$(LIBMAJOR)
+- SLIB_CREATE_DEF_CMD=
++@@ -43,1 +43,1 @@
++-FULLNAME=$(NAME)$(BUILDSUF)
+++FULLNAME=ADM6$(NAME)$(BUILDSUF)
+--- origsrc/avidemux_2.6.0/avidemux_core/ffmpeg_package/patches/configure.patch	2012-07-26 01:07:08.000000000 -0500
++++ src/avidemux_2.6.0/avidemux_core/ffmpeg_package/patches/configure.patch	2012-09-24 00:04:54.726616100 -0500
+@@ -8,7 +8,21 @@
+      ebp_available
+      ebx_available
+      exp2
+-@@ -3125,6 +3126,7 @@
++@@ -2754,9 +2755,11 @@ case $target_os in
++         SLIBSUF=".dll"
++         SLIBNAME_WITH_VERSION='$(SLIBPREF)$(FULLNAME)-$(LIBVERSION)$(SLIBSUF)'
++         SLIBNAME_WITH_MAJOR='$(SLIBPREF)$(FULLNAME)-$(LIBMAJOR)$(SLIBSUF)'
++-        SHFLAGS='-shared -Wl,--enable-auto-image-base'
+++        SLIB_INSTALL_NAME='$(SLIBNAME_WITH_MAJOR)'
+++        SLIB_INSTALL_LINKS=
+++        SLIB_INSTALL_EXTRA_LIB='lib$(FULLNAME).dll.a'
+++        SHFLAGS='-shared -Wl,--out-implib,$(SUBDIR)lib$(FULLNAME).dll.a'
++         objformat="win32"
++-        enable dos_paths
++         check_cflags -fno-common
++         add_cppflags -U__STRICT_ANSI__
++         ;;
++@@ -3125,6 +3128,7 @@
+  check_func_headers glob.h glob
+  
+  check_header dlfcn.h
+--- origsrc/avidemux_2.6.0/cmake/admFFmpegBuild.cmake	2012-07-27 06:21:45.000000000 -0500
++++ src/avidemux_2.6.0/cmake/admFFmpegBuild.cmake	2012-09-24 00:39:48.352364600 -0500
+@@ -29,6 +29,7 @@ set(FFMPEG_PARSERS  ac3  h263  h264  mpe
+ set(FFMPEG_PROTOCOLS  file)
+ xadd("--enable-shared --disable-static --disable-everything --disable-avfilter --enable-hwaccels --enable-postproc --enable-gpl")
+ xadd("--enable-runtime-cpudetect --disable-network --disable-ffplay --disable-ffprobe")
++xadd("--disable-doc")
+ 
+ if (NOT CROSS)
+ 	xadd(--prefix ${CMAKE_INSTALL_PREFIX})
+--- origsrc/avidemux_2.6.0/cmake/admFFmpegUtil.cmake	2012-08-14 03:15:00.000000000 -0500
++++ src/avidemux_2.6.0/cmake/admFFmpegUtil.cmake	2012-09-23 22:48:05.728996500 -0500
+@@ -30,6 +30,12 @@ MACRO (getFfmpegLibNames sourceDir)
+ 		set(LIBAVUTIL_LIB lib${LIBAVCODEC_ADM}avutil.${LIBAVUTIL_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX})
+ 		set(LIBPOSTPROC_LIB lib${LIBAVCODEC_ADM}postproc.${LIBPOSTPROC_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX})
+ 		set(LIBSWSCALE_LIB lib${LIBAVCODEC_ADM}swscale.${LIBSWSCALE_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX})
++	elseif (CYGWIN)
++		set(LIBAVCODEC_LIB cyg${LIBAVCODEC_ADM}avcodec-${LIBAVCODEC_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX})
++		set(LIBAVFORMAT_LIB cyg${LIBAVCODEC_ADM}avformat-${LIBAVFORMAT_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX})
++		set(LIBAVUTIL_LIB cyg${LIBAVCODEC_ADM}avutil-${LIBAVUTIL_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX})
++		set(LIBPOSTPROC_LIB cyg${LIBAVCODEC_ADM}postproc-${LIBPOSTPROC_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX})
++		set(LIBSWSCALE_LIB cyg${LIBAVCODEC_ADM}swscale-${LIBSWSCALE_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX})
+ 	elseif (UNIX)
+ 		set(LIBAVCODEC_LIB lib${LIBAVCODEC_ADM}avcodec${CMAKE_SHARED_LIBRARY_SUFFIX}.${LIBAVCODEC_VERSION})
+ 		set(LIBAVFORMAT_LIB lib${LIBAVCODEC_ADM}avformat${CMAKE_SHARED_LIBRARY_SUFFIX}.${LIBAVFORMAT_VERSION})

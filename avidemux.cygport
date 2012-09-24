@@ -1,0 +1,45 @@
+inherit cmake qt4
+
+NAME="avidemux"
+VERSION=2.6.0
+RELEASE=1
+CATEGORY="Video"
+SUMMARY="Video editor designed for simple tasks"
+DESCRIPTION="Avidemux is a free video editor designed for simple cutting,
+filtering and encoding tasks. It supports many file types, including AVI,
+DVD compatible MPEG files, MP4 and ASF, using a variety of codecs.  Tasks
+can be automated using projects, job queue and powerful scripting capabilities."
+HOMEPAGE="http://fixounet.free.fr/avidemux/"
+SRC_URI="mirror://sourceforge/${PN}/${PN}_${PV}.tar.gz"
+SRC_DIR="${PN}_${PV}"
+
+PATCH_URI="
+	01-cygwin-asneeded.patch
+	02-cygwin-crashdump.patch
+	03-cygwin-dynload.patch
+	04-cygwin-nprocs.patch
+	05-cygwin-ffmpeg.patch
+"
+
+# required for (included) ffmpeg
+CFLAGS+=" -fomit-frame-pointer"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	bash bootStrap.bash --with-cli || error "build failed"
+}
+
+src_install() {
+	cd ${B}
+	cp -r install/usr/ ${D}/
+	# fix location of ffmpeg DLLs
+	mv ${D}/usr/lib/*.dll ${D}/usr/bin/
+	find ${D}/usr/lib/ADM_plugins*/ -name '*.dll.a' -delete
+
+	doicon ${S}/avidemux_icon.png
+	make_desktop_entry avidemux3_qt4 Avidemux avidemux_icon \
+		"AudioVideo;Video;AudioVideoEditing" "Video Editor" \
+		"MimeType=video/mpeg;video/quicktime;video/x-msvideo;video/x-anim;audio/x-mp3;audio/x-mp2;"
+	doman ${S}/man/avidemux.1
+}
