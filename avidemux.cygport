@@ -1,7 +1,7 @@
 inherit cmake qt4
 
 NAME="avidemux"
-VERSION=2.6.0
+VERSION=2.6.1
 RELEASE=1
 CATEGORY="Video"
 SUMMARY="Video editor designed for simple tasks"
@@ -23,6 +23,8 @@ PATCH_URI="
 
 # required for (included) ffmpeg
 CFLAGS+=" -fomit-frame-pointer"
+# avoid errors on UINT64_C (from libavutil headers) in C++ code
+CXXFLAGS+=" -D__STDC_CONSTANT_MACROS="
 
 src_compile() {
 	lndirs
