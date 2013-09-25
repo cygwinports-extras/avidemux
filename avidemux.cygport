@@ -1,7 +1,7 @@
 inherit cmake qt4
 
 NAME="avidemux"
-VERSION=2.6.1
+VERSION=2.6.5
 RELEASE=1
 CATEGORY="Video"
 SUMMARY="Video editor designed for simple tasks"
@@ -19,6 +19,7 @@ PATCH_URI="
 	03-cygwin-dynload.patch
 	04-cygwin-nprocs.patch
 	05-cygwin-ffmpeg.patch
+	06-cygwin-avsfilter.patch
 "
 
 # required for (included) ffmpeg

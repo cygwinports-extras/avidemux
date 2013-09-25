@@ -1,0 +1,17 @@
+--- origsrc/avidemux_2.6.5/avidemux_plugins/ADM_videoFilters6/avsfilter/CMakeLists.txt	2013-08-29 05:06:48.000000000 -0500
++++ src/avidemux_2.6.5/avidemux_plugins/ADM_videoFilters6/avsfilter/CMakeLists.txt	2013-09-25 01:40:59.558826600 -0500
+@@ -1,7 +1,7 @@
+ INCLUDE(vf_plugin)
+ INCLUDE(FindTar)
+ 
+-IF(NOT WIN32 AND NOT APPLE)
++IF(NOT WIN32 AND NOT APPLE AND NOT CYGWIN)
+ SET(ADM_vf_avsfilter_SRCS avsfilter.cpp avspipecomm.cpp cdebug.cpp strnew.cpp avsfilterparam_json.cpp)
+ 
+ ADD_LIBRARY(ADM_vf_avsfilter SHARED ${ADM_vf_avsfilter_SRCS})
+@@ -26,4 +26,4 @@ find_package(Tar)
+ execute_process(COMMAND ${TAR_EXECUTABLE} xvf ${AVSFILTER_WINE_BINARY_ARCHIVE} -C ${tempAvsFilterUnpackDir})
+ install(FILES ${tempAvsFilterUnpackDir}/avsload.exe ${tempAvsFilterUnpackDir}/pipe_source.dll DESTINATION ${addonesInstallDir}) 
+ ENDIF(DO_SETTINGS) 
+-ENDIF(NOT WIN32 AND NOT APPLE)
++ENDIF(NOT WIN32 AND NOT APPLE AND NOT CYGWIN)
