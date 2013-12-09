@@ -1,0 +1,98 @@
+--- origsrc/avidemux_2.6.5/avidemux/common/ADM_audioFilter/src/ADM_libsamplerate/float_cast.h	2013-08-29 05:06:48.000000000 -0500
++++ src/avidemux_2.6.5/avidemux/common/ADM_audioFilter/src/ADM_libsamplerate/float_cast.h	2013-11-03 01:05:02.379700600 -0500
+@@ -73,7 +73,7 @@
+ 
+ 	#include	<math.h>
+ 
+-#elif (defined (__CYGWIN__))
++#elif (defined (__CYGWIN__) && defined(__i386__))
+ 
+ 	#include	<math.h>
+ 
+@@ -121,7 +121,7 @@
+ 		return retval ;
+ 	} /* float2int */
+ 
+-#elif (defined (WIN64) || defined(_WIN64))
++#elif (defined (WIN64) || defined(_WIN64)) || (defined(__CYGWIN__) && defined(__x86_64__))
+ 
+ 	/*	Win64 section should be places before Win32 one, because
+ 	**	most likely both WIN32 and WIN64 will be defined in 64-bit case.
+--- origsrc/avidemux_2.6.7/avidemux/qt4/ADM_UIs/src/T_openGL.cpp	2013-12-06 00:33:08.000000000 -0600
++++ src/avidemux_2.6.7/avidemux/qt4/ADM_UIs/src/T_openGL.cpp	2013-12-08 15:46:28.312781500 -0600
+@@ -279,7 +279,7 @@ bool ADM_coreVideoFilterQtGl::downloadTe
+     return true;
+ }
+ typedef void typeGlYv444(const uint8_t *src,uint8_t *dst,const int width);
+-#ifdef ADM_CPU_X86
++#if defined(ADM_CPU_X86) && !(defined(__CYGWIN__) && defined(__x86_64__))
+ static inline void glYUV444_MMXInit(void)
+ {
+    static uint64_t __attribute__((used)) FUNNY_MANGLE(mask) = 0x00ff000000ff0000LL;
+@@ -355,7 +355,7 @@ bool ADM_coreVideoFilterQtGl::downloadTe
+     int width=image->GetWidth(PLANAR_Y);
+     int height=image->GetHeight(PLANAR_Y);
+     typeGlYv444 *luma=glYUV444_C;
+-#ifdef ADM_CPU_X86
++#if defined(ADM_CPU_X86) && !(defined(__CYGWIN__) && defined(__x86_64__))
+       if(CpuCaps::hasMMX())
+       {
+             glYUV444_MMXInit();
+@@ -451,7 +451,7 @@ bool ADM_coreVideoFilterQtGl::downloadTe
+         int width=image->GetWidth(PLANAR_Y);
+         int height=image->GetHeight(PLANAR_Y);
+         typeGlYv444 *luma=glYUV444_C;
+-    #ifdef ADM_CPU_X86
++    #if defined(ADM_CPU_X86) && !(defined(__CYGWIN__) && defined(__x86_64__))
+           if(CpuCaps::hasMMX())
+           {
+                 glYUV444_MMXInit();
+--- origsrc/avidemux_2.6.7/avidemux_core/ADM_coreImage/src/ADM_imageUtils.cpp	2013-12-06 00:33:08.000000000 -0600
++++ src/avidemux_2.6.7/avidemux_core/ADM_coreImage/src/ADM_imageUtils.cpp	2013-12-08 15:00:57.185569900 -0600
+@@ -305,7 +305,7 @@ uint32_t ww,hh;
+         }
+         return df;
+ }
+-#ifdef ADM_CPU_X86
++#if defined(ADM_CPU_X86) && !(defined(__CYGWIN__) && defined(__x86_64__))
+ static uint64_t __attribute__((used)) FUNNY_MANGLE(noise64);
+ static uint32_t computeDiffMMX(uint8_t  *s1,uint8_t *s2,uint32_t noise,uint32_t l)
+ {
+@@ -395,7 +395,7 @@ uint32_t result=0;
+ uint32_t ADMImage::lumaDiff(ADMImage *src1,ADMImage *src2,uint32_t noise)
+ {
+ 
+-#ifdef ADM_CPU_X86
++#if defined(ADM_CPU_X86) && !(defined(__CYGWIN__) && defined(__x86_64__))
+ uint32_t r1,r2;
+         if(CpuCaps::hasMMX())
+         {
+@@ -589,7 +589,7 @@ static inline void yuv444_C(uint8_t *src
+         src+=4*w;
+     }
+ }
+-#ifdef ADM_CPU_X86
++#if defined(ADM_CPU_X86) && !(defined(__CYGWIN__) && defined(__x86_64__))
+ static inline void yuv444_MMX(uint8_t *src,uint8_t *dst,int w,int h,int s)
+ {
+ static uint64_t __attribute__((used)) FUNNY_MANGLE(mask) = 0x00ff000000ff0000LL;
+@@ -981,7 +981,7 @@ bool ADMImage::convertFromYUV444(uint8_t
+     uint8_t *dst=this->GetWritePtr(PLANAR_Y);
+     uint8_t *src=from;
+ 
+-    #ifdef ADM_CPU_X86
++    #if defined(ADM_CPU_X86) && !(defined(__CYGWIN__) && defined(__x86_64__))
+         if(CpuCaps::hasMMX())
+             yuv444_MMX(src,dst,width,height,stride);            
+         else
+--- origsrc/avidemux_2.6.7/avidemux_plugins/ADM_videoFilters6/fluxSmooth/ADM_vidFluxAsm.cpp	2013-12-06 00:33:08.000000000 -0600
++++ src/avidemux_2.6.7/avidemux_plugins/ADM_videoFilters6/fluxSmooth/ADM_vidFluxAsm.cpp	2013-12-08 16:20:01.281916700 -0600
+@@ -178,7 +178,7 @@ void attribute_used ADMVideoFlux::DoFilt
+ 	ADM_assert(ycnt == 0);
+ 
+ }
+-#ifdef ADM_CPU_X86
++#if defined(ADM_CPU_X86) && !(defined(__CYGWIN__) && defined(__x86_64__))
+ /*
+ 	__asm movq mm2, mm0 \
+ 	__asm movq mm3, mm1 \
