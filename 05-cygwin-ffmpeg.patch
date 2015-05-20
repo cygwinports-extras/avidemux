@@ -13,16 +13,6 @@
 +@@ -43,1 +43,1 @@
 +-FULLNAME=$(NAME)$(BUILDSUF)
 ++FULLNAME=ADM6$(NAME)$(BUILDSUF)
---- origsrc/avidemux_2.6.0/cmake/admFFmpegBuild.cmake	2012-07-27 06:21:45.000000000 -0500
-+++ src/avidemux_2.6.0/cmake/admFFmpegBuild.cmake	2012-09-24 00:39:48.352364600 -0500
-@@ -30,6 +30,7 @@ set(FFMPEG_PARSERS  ac3  h263  h264  mpe
- xadd("--enable-shared --disable-static --disable-everything --disable-avfilter --enable-hwaccels --enable-postproc --enable-gpl")
- xadd("--enable-runtime-cpudetect --disable-network --disable-ffplay --disable-ffprobe")
- xadd("--enable-swscale --disable-swresample")
-+xadd("--disable-doc")
- 
- if (NOT CROSS)
- 	xadd(--prefix ${CMAKE_INSTALL_PREFIX})
 --- origsrc/avidemux_2.6.0/cmake/admFFmpegUtil.cmake	2012-08-14 03:15:00.000000000 -0500
 +++ src/avidemux_2.6.0/cmake/admFFmpegUtil.cmake	2012-09-23 22:48:05.728996500 -0500
 @@ -30,6 +30,12 @@ MACRO (getFfmpegLibNames sourceDir)

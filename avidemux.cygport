@@ -1,7 +1,7 @@
 inherit cmake qt4
 
 NAME="avidemux"
-VERSION=2.6.7
+VERSION=2.6.9
 RELEASE=1
 CATEGORY="Video"
 SUMMARY="Video editor designed for simple tasks"
@@ -13,11 +13,11 @@ HOMEPAGE="http://fixounet.free.fr/avidemux/"
 SRC_URI="mirror://sourceforge/${PN}/${PN}_${PV}.tar.gz"
 SRC_DIR="${PN}_${PV}"
 
-#	04-cygwin-nprocs.patch
 PATCH_URI="
 	01-cygwin-asneeded.patch
 	02-cygwin-crashdump.patch
 	03-cygwin-dynload.patch
+	04-cygwin-nprocs.patch
 	05-cygwin-ffmpeg.patch
 	06-cygwin-avsfilter.patch
 	07-cygwin64.patch
